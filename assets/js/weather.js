@@ -1,6 +1,10 @@
 var userFormEl = document.querySelector("#userForm");
 var inputEl = document.getElementById("#input-field");
 
+var getCityName = function(){
+    console.log("function call");
+};
+
 var onSubmit = function(event){
     event.preventDefault();
     console.log(event);
