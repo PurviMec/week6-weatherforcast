@@ -4,14 +4,13 @@ let userFormEl = document.querySelector('#userForm');
 let futureDayWeatherEl = document.querySelector('#future-weather');
 let currentWeatherEl = document.querySelector('#current-weather-data');
 let cityNameEl = document.querySelector('#city-name');
+let forcastDay1 = document.querySelector('#date1');
+let forcastDay2 = document.querySelector('#date2');
+let forcastDay3 = document.querySelector('#date3');
+let forcastDay4 = document.querySelector('#date4');
+let forcastDay5 = document.querySelector('#date5');
 
-const m = moment();
-document.getElementById('currentDate').innerHTML = moment().format('l');  
-document.getElementById('date1').innerHTML =  moment(moment(), "DD-MM-YYYY").add(1, 'days').format('l'); 
-document.getElementById('date2').innerHTML =  moment(moment(), "DD-MM-YYYY").add(2, 'days').format('l'); 
-document.getElementById('date3').innerHTML =  moment(moment(), "DD-MM-YYYY").add(3, 'days').format('l'); 
-document.getElementById('date4').innerHTML =  moment(moment(), "DD-MM-YYYY").add(4, 'days').format('l'); 
-document.getElementById('date5').innerHTML =  moment(moment(), "DD-MM-YYYY").add(5, 'days').format('l'); 
+const m = moment();  
 
 var getForecast = function() {
 
@@ -29,6 +28,11 @@ var getForecast = function() {
     .then(data => {
          console.log(data);
         displayData(data);
+        displayData1(data);
+        displayData2(data);
+        displayData3(data);
+        displayData4(data);
+        displayData5(data);
          
          
     }).catch(error=>{
@@ -55,13 +59,17 @@ var searchButtonHandler = function(event){
 };
 
 function displayData(data){
-    let{timezone} = data;
-
+    let{date} = data.current.weather[0];
+    let{timezone} = data
+    let icon = data.current.weather[0].icon;
     cityNameEl.innerHTML = 
     `
     <div class="current-weather-data">
         <div>
-            <h3> ${timezone}<span id = "icon"></span></h3>
+            <h3> <div>${timezone}</div>
+                <span>  (${window.moment(date).format('l')})</span>
+                <span><img src = "http://openweathermap.org/img/wn/${icon}@2x.png"</span>
+            </h3>
         </div>
     </div> 
     `;
@@ -80,13 +88,82 @@ function displayData(data){
     <div class="current-weather-data">
         <div>Humidity: ${humidity}</div>
     </div>    
-    <div class="current-weather-data">
+    <div class="current-weather-data" id="uvi">
         <div>UV Index: ${uvi}</div>
-    </div>    
+    </div>  
+    
+    UVIndex = $('#uvi').value.trim();
+    if (UVIndex <= 2.5){
+        UVIndex.className="low";
+    } else if(UVIndex >=2.6 && UVIndex <= 5){
+        UVIndex.className = "moderate";
+    }else {
+        UVIndex.className = "high";
+    }
     `;
     
-
     
+
+}
+
+function displayData1(data){
+    let {date, temp, wind_speed, humidity} = data.daily[1];
+    let icon = data.daily[1].weather[0].icon;
+    forcastDay1.innerHTML = `
+        <div class="date" id="date1"><h4>${window.moment(moment(date), "DD-MM-YYYY").add(1, 'days').format('l')}</h4></div>
+        <div><span><img src = "http://openweathermap.org/img/wn/${icon}@2x.png"</span></div>
+        <div class="temp">Temp: ${temp.day}</div>
+        <div class="wind">Wind: ${wind_speed}</div>
+        <div class="humidity">Humidity: ${humidity}</div>
+    `;
+}
+
+function displayData2(data){
+    let {date, temp, wind_speed, humidity} = data.daily[2];
+    let icon = data.daily[2].weather[0].icon;
+    forcastDay2.innerHTML = `
+        <div class="date" id="date1"><h4${window.moment(moment(date), "DD-MM-YYYY").add(2, 'days').format('l')}</h4></div>
+        <div><span><img src = "http://openweathermap.org/img/wn/${icon}@2x.png"</span></div>
+        <div class="temp">Temp: ${temp.day}</div>
+        <div class="wind">Wind: ${wind_speed}</div>
+        <div class="humidity">Humidity: ${humidity}</div>
+    `;
+}
+
+function displayData3(data){
+    let {date, temp, wind_speed, humidity} = data.daily[3];
+    let icon = data.daily[3].weather[0].icon;
+    forcastDay3.innerHTML = `
+        <div class="date" id="date1"><h4>${window.moment(moment(date), "DD-MM-YYYY").add(3, 'days').format('l')}</h4></div>
+        <div><span><img src = "http://openweathermap.org/img/wn/${icon}@2x.png"</span></div>
+        <div class="temp">Temp: ${temp.day}</div>
+        <div class="wind">Wind: ${wind_speed}</div>
+        <div class="humidity">Humidity: ${humidity}</div>
+    `;
+}
+
+function displayData4(data){
+    let {date, temp, wind_speed, humidity} = data.daily[4];
+    let icon = data.daily[3].weather[0].icon;
+    forcastDay4.innerHTML = `
+        <div class="date" id="date1"><h4>${window.moment(moment(date), "DD-MM-YYYY").add(4, 'days').format('l')}</h4></div>
+        <div><span><img src = "http://openweathermap.org/img/wn/${icon}@2x.png"</span></div>
+        <div class="temp">Temp: ${temp.day}</div>
+        <div class="wind">Wind: ${wind_speed}</div>
+        <div class="humidity">Humidity: ${humidity}</div>
+    `;
+}
+
+function displayData5(data){
+    let {date, temp, wind_speed, humidity} = data.daily[5];
+    let icon = data.daily[3].weather[0].icon;
+    forcastDay5.innerHTML = `
+        <div class="date" id="date1"><h4>${window.moment(moment(date), "DD-MM-YYYY").add(5, 'days').format('l')}</h4></div>
+        <div><span><img src = "http://openweathermap.org/img/wn/${icon}@2x.png"</span></div>
+        <div class="temp">Temp: ${temp.day}</div>
+        <div class="wind">Wind: ${wind_speed}</div>
+        <div class="humidity">Humidity: ${humidity}</div>
+    `;
 }
 
 

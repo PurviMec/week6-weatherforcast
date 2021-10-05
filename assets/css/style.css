@@ -40,12 +40,34 @@
     margin-top: 20px;
 }
 
-.container3 .day {
-    background-color: rgb(72, 71, 82);
+.day {
+    background-color: rgb(15, 5, 128);
     color: honeydew;
+    font-size: 20px;
+}
+
+.current-weather-data{
     font-size: 20px;
 }
 
 .container3 {
     max-width: 100%;
+}
+
+.future-cards {
+    justify-content: space-around;
+    
+}
+
+.low{
+  background-color: green;
+}
+
+.moderate{
+    background-color: yellow;
+}
+
+.high{
+    background-color: red;
+    color: black;
 }
