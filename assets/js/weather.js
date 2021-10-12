@@ -4,8 +4,8 @@ let userFormEl = document.querySelector('#userForm');
 let futureDayWeatherEl = document.querySelector('#future-weather');
 let currentWeatherEl = document.querySelector('#current-weather-data');
 
-//const m = moment();  
-//let today = window.moment(date).format('l');
+const m = moment();  
+
 //let day1 = window.moment(moment(date), "DD-MM-YYYY").add(1, 'days').format('l');
 //let day2 = window.moment(moment(date), "DD-MM-YYYY").add(1, 'days').format('l');
 //let day3 = window.moment(moment(date), "DD-MM-YYYY").add(1, 'days').format('l');
@@ -145,7 +145,9 @@ let currentWeatherEl = document.querySelector('#current-weather-data');
 
 $('#btn').on('click', function(event) {
     event.preventDefault();
+    
     var name = document.querySelector("input[id='input-field']").value;
+   
     // call the weather api using the date and cityName (fetch)
     fetch('https://api.openweathermap.org/data/2.5/weather?q=' + name + '&appid=93712e51c9b96dd6f82b519a86a2a96b')
     .then(function(response) {
@@ -157,54 +159,107 @@ $('#btn').on('click', function(event) {
             return weather.json(response);
         })
         .then(function(weather) {
-            $('#cityName').empty();
+            //$(name).html="";
             console.log(response);
             console.log(weather);
             saveCity();
-            displayCity();
+            displayCity(name, weather);
+            futureWeatherData(weather);
+            //displayCity(getCityName);
+            //displayCityData();
+            
             //$('#forecast').empty();
             //displayWeather(weather, cityName, date);
         })
     })
 });
 
-var saveCity = function(i){
-    cityNameEl = document.querySelector("input[id='input-field']").value;
-    for(i = 0; i = cityNameEl.length; i++){
+var saveCity = function(){
+    var cityNameEl = document.querySelector("input[id='input-field']").value;
+
     localStorage.setItem('City', JSON.stringify(cityNameEl));
-    }
+    displayCityData();
 }
 
 var displayCityData = function(){
     
-    console.log(getCityName);
+    var getCityName = JSON.parse(localStorage.getItem('City'));
+    //console.log(getCityName);
+    displaySearch(getCityName);
     
-        var getCityName = JSON.parse( localStorage.getItem('City'))
     
 }
 
-var displayCity = function(city, response){
-    //console.log(response);
-    let cityNameEl = document.querySelector('#cityName');
-    //let {icon} = response.weather;
+var displaySearch = function(getCityName){
+    var searchEl = document.querySelector("div[id='search-field']");
+    var searchCityNameEl = $('<h5></h5>')
+    .text(getCityName)
+    .addClass('card p-2 mt-2')
+    $(searchEl).append(searchCityNameEl);
+}
+
+var displayCity = function(name, weather){
+    //console.log(name);
+    let icon = weather.current.weather[0].icon;
     let today = window.moment().format('l');
-    var getCityEl = $('<h3></h3>')
-    .text (city)
+    let searchCityEl = document.getElementById("city-date-icon");
+    let geticonEl = document.getElementById('icon')
+    //let icon = response.weather;
+
+    var getCityEl = $('<span></span>')
+    .text (name)
     .addClass('m-2')
 
-    var getdayEl = $('<h3></h3>')
+    var getdayEl = $('<span></span>')
     .text (today)
     .addClass('m-2')
-
-    //cityNameEl.innerHTML = 
-    //`<span><img src = "http://openweathermap.org/img/wn/${icon}@2x.png"</span>`;
-
-    //var conditionsEl = $('<img>')
-    //.attr('src', 'https://openweathermap.org/img/wn/' + weather.current.weather[0].icon + '@2x.png')
-    //.attr('alt', weather.current.weather[0].main);
     
-    $(cityNameEl).append(getCityEl, getdayEl);
+    
+    geticonEl.innerHTML = `
+    <span><img src = "http://openweathermap.org/img/wn/${icon}@2x.png"</span>
+    `;
+
+    let{temp, wind_speed, humidity, uvi} = weather.current;
+    
+    currentWeatherEl.innerHTML =
+    
+    `
+    <div class="current-weather-data">
+        <div>Temp: ${temp}</div>
+    </div>    
+    <div class="current-weather-data">
+        <div>Wind: ${wind_speed}</div>
+    </div>    
+    <div class="current-weather-data">
+        <div>Humidity: ${humidity}</div>
+    </div>    
+    <div class="current-weather-data" id="uvi">
+        <div>UV Index: ${uvi}</div>
+    </div>  
+    
+    `;
+    
+    
+    $(searchCityEl).append(getCityEl, getdayEl);
 }
 
+var futureWeatherData = function(weather){
+    for (i=0; i< weather.daily.length; i++){
+        displayFuture (weather, i);
+    }
+}
+
+var displayFuture = function (weather, i){
+    let forcastEl = document.getElementById('future-forcast');
+    let {date, temp, wind_speed, humidity} = weather.daily[i];
+    let icon = weather.daily[i].weather[0].icon;
+    forcastEl.innerHTML = `
+        <div class="date" id="date1"><h4>${window.moment(moment(date), "DD-MM-YYYY").add(1, 'days').format('l')}</h4></div>
+        <div><span><img src = "http://openweathermap.org/img/wn/${icon}@2x.png"</span></div>
+        <div class="temp">Temp: ${temp.day}</div>
+        <div class="wind">Wind: ${wind_speed}</div>
+        <div class="humidity">Humidity: ${humidity}</div>
+   `;
+}
 
 displayCityData();
