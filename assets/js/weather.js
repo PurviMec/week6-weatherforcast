@@ -3,14 +3,8 @@ let onClickEl = document.querySelector('#btn');
 let userFormEl = document.querySelector('#userForm');
 let futureDayWeatherEl = document.querySelector('#future-weather');
 let currentWeatherEl = document.querySelector('#current-weather-data');
-let cityNameEl = document.querySelector('#cityName');
-let forcastDay1 = document.querySelector('#date1');
-let forcastDay2 = document.querySelector('#date2');
-let forcastDay3 = document.querySelector('#date3');
-let forcastDay4 = document.querySelector('#date4');
-let forcastDay5 = document.querySelector('#date5');
 
-const m = moment();  
+//const m = moment();  
 //let today = window.moment(date).format('l');
 //let day1 = window.moment(moment(date), "DD-MM-YYYY").add(1, 'days').format('l');
 //let day2 = window.moment(moment(date), "DD-MM-YYYY").add(1, 'days').format('l');
@@ -162,54 +156,55 @@ $('#btn').on('click', function(event) {
         .then(function(weather) {
             return weather.json(response);
         })
-        .then(function(data) {
+        .then(function(weather) {
+            $('#cityName').empty();
             console.log(response);
-            console.log(data);
-            currentWeather();
-            
+            console.log(weather);
             saveCity();
+            displayCity();
             //$('#forecast').empty();
             //displayWeather(weather, cityName, date);
         })
     })
 });
 
-var saveCity = function(){
+var saveCity = function(i){
     cityNameEl = document.querySelector("input[id='input-field']").value;
+    for(i = 0; i = cityNameEl.length; i++){
     localStorage.setItem('City', JSON.stringify(cityNameEl));
+    }
 }
 
 var displayCityData = function(){
-    var getCityName = JSON.parse( localStorage.getItem('City'))
-    console.log(getCityName); 
+    
+    console.log(getCityName);
+    
+        var getCityName = JSON.parse( localStorage.getItem('City'))
+    
 }
 
-var currentWeather = function(response, data){
-    console.log(response);
-    console.log(data);
-    let{name} = response;
-    let icon = data.current.weather[0].icon;;
-    let temp = data.main;
-    let speed = data.wind;
-    let humidity = data.main;
-    let uvi = data.current
-    cityNameEl.innerHTML = 
-    `
-    <div class="current-weather-data">
-        <div>
-            <h3> <div>${name}</div>
-                <span>  (${window.moment(date).format('l')})</span>
-                <span><img src = "http://openweathermap.org/img/wn/${icon}@2x.png"</span>
-            </h3>
-        <div>
-        <div>
-            <p>Temp: ${temp}<p/>
-            <p>Wind: ${speed}<p/>
-            <p>Humidity: ${humidity}<p/>
-            <p>UV Index: ${uvi}<p/>
-        </div>
-    </div> 
-    `;
+var displayCity = function(city, response){
+    //console.log(response);
+    let cityNameEl = document.querySelector('#cityName');
+    //let {icon} = response.weather;
+    let today = window.moment().format('l');
+    var getCityEl = $('<h3></h3>')
+    .text (city)
+    .addClass('m-2')
+
+    var getdayEl = $('<h3></h3>')
+    .text (today)
+    .addClass('m-2')
+
+    //cityNameEl.innerHTML = 
+    //`<span><img src = "http://openweathermap.org/img/wn/${icon}@2x.png"</span>`;
+
+    //var conditionsEl = $('<img>')
+    //.attr('src', 'https://openweathermap.org/img/wn/' + weather.current.weather[0].icon + '@2x.png')
+    //.attr('alt', weather.current.weather[0].main);
+    
+    $(cityNameEl).append(getCityEl, getdayEl);
 }
 
 
+displayCityData();
