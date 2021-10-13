@@ -45,6 +45,9 @@
     color: honeydew;
     font-size: 20px;
 }
+.userForm{
+    width: 100%;
+}
 
 .current-weather-data{
     font-size: 20px;

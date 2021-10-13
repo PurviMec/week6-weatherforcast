@@ -23,14 +23,16 @@
     <main>
         <div class="container">    
             <div class="row ">    
-                <div class="col-2 col-xl-2">
-                    <h3 class="h3">Search for a city:</h3>
-                    <form id="userForm" class="userForm ">
-                        <input type="text" class="input" id="input-field" name="City" placeholder=""/></br>
-                        <button class="button" id="btn">Search</button>
-                    </form>
+                <div class="col-2 ">
+                    <div class="col-12">
+                        <h3 class="h3">Search for a city:</h3>
+                        <form id="userForm" class="userForm">
+                            <input type="text" class="input col-12" id="input-field" name="City" placeholder=""/></br>
+                            <button class="btn btn-primary btn-block col-12" id="btn">Search</button>
+                        </form>
+                    </div>
                     <div class="row">
-                        <div class="search-field card m-2 col-11" id="search-field">
+                        <div class="search-field m-2 col-12" id="search-field">
                         
                         </div>
                     </div>
@@ -41,8 +43,7 @@
                         
                            
                                <div class="cityName col-12  card todays-weather" id="cityName"><!--City Name date icon-->
-                                   <h3 id="city-date-icon" class=""></h3>
-                                   <span id="icon"></span>
+                                   <h3 id="city-date-icon" class=""><span id="icon" class="icon col-push-4"></span></h3>
                                   
                                    <div id="current-weather-data" class="current-weather-data"></div>
                                   
@@ -54,21 +55,21 @@
                     <div class="col-12">
                         <h4>5 - Day Forecast</h4>
                     </div>
-                    <div class="container3 card" id="future-weather"></div>
-                        <div class="row future-cards col-12">
-                            <div class="col-2 card day " id="date1" >
+                    <div class="container3" id="future-weather"></div>
+                        <div class="row col-12" id="future-forcast">
+                            <div class="col-2 card day m-4 " id="date1" >
                                 
                             </div>
-                            <div class="col-2 card day" id="date2">
+                            <div class="col-2 card day m-4 " id="date2">
                                 
                             </div>
-                            <div class="col-2 card day" id="date3">
+                            <div class="col-2 card day m-4" id="date3">
                                 
                             </div>
-                            <div class="col-2 card day" id="date4">
+                            <div class="col-2 card day m-4" id="date4">
                                 
                             </div>
-                            <div class="col-2 card day" id="date5">
+                            <div class="col-2 card day m-4" id="date5">
                                 
                             </div>
                         </div>
