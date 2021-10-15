@@ -6,10 +6,11 @@ var currentWeatherEl = document.querySelector('#current-weather-data');
 
 const m = moment();  
 
-    
+
 $('#btn').on('click', function(event) {
+      
     event.preventDefault();
-    $("input[id='input-field']").html("");
+    
     var name = document.querySelector("input[id='input-field']").value;
    
     fetch('https://api.openweathermap.org/data/2.5/weather?q=' + name + '&appid=93712e51c9b96dd6f82b519a86a2a96b')
@@ -22,7 +23,7 @@ $('#btn').on('click', function(event) {
             return weather.json(response);
         })
         .then(function(weather) {
-            
+           
             console.log(response);
             console.log(weather);
             saveCity();
@@ -32,7 +33,7 @@ $('#btn').on('click', function(event) {
             displayFuture3(weather);
             displayFuture4(weather);
             displayFuture5(weather);
-            
+            document.querySelector("input[id='input-field']").value = '';
         })
     })
 })
@@ -52,7 +53,7 @@ var displaySearch = function(getCityName){
     var searchEl = document.querySelector("div[id='search-field']");
     var searchCityNameEl = $('<button></button>')
     .text(getCityName)
-    .addClass('btn btn-secondary m-2 col-12')
+    .addClass('btn btn-secondary m-2 col-12 buttons')
     $(searchEl).append(searchCityNameEl);
     
     for (var i = 0; i < searchCityNameEl.length; i++){
@@ -166,6 +167,7 @@ var displayFuture5 = function ( weather){
 
 
 var cityNameBtn = function (searchCityNameEl, i){
+    console.log(cityNameBtn);
     $(searchCityNameEl[i]).on('click', function(event) {
         event.preventDefault();
         document.getElementById('date1').innerHTML= "";
@@ -175,7 +177,6 @@ var cityNameBtn = function (searchCityNameEl, i){
         document.getElementById('date5').innerHTML = "";
         $('#city-date-icon').html("");
         document.getElementById('current-weather-data').innerHTML = "";
-        
         var name = document.querySelector("input[id='input-field']").value;
    
         fetch('https://api.openweathermap.org/data/2.5/weather?q=' + name + '&appid=93712e51c9b96dd6f82b519a86a2a96b')
@@ -188,9 +189,7 @@ var cityNameBtn = function (searchCityNameEl, i){
                 return weather.json(response);
             })
             .then(function(weather) {
-                document.querySelector("input[id='input-field']").value = '';
-                //console.log(response);
-                //console.log(weather);
+                
                 displayCity(name, weather);
                 displayFuture(weather);
                 displayFuture2(weather);
@@ -203,4 +202,4 @@ var cityNameBtn = function (searchCityNameEl, i){
 }
 displayCityData();
 
-                
+              

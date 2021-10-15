@@ -20,25 +20,18 @@
 
 .input{
     margin-bottom: 10px;
-    width: 80%;
+    width: 100%;
 }
 
-.button {
-    width: 80%;
-    background-color: rgb(0, 132, 255);
-    color: azure;
-    
+
+.form1 {
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid black;
+    max-width: 100%;
 }
 
-.userForm {
-    margin: 10px 10px 20px 10px;
-    
-}
 
-.col-2 {
-    
-    margin-top: 20px;
-}
 
 .day {
     background-color: rgb(15, 5, 128);
