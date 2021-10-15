@@ -78,6 +78,7 @@ var displayCity = function(name, weather){
     .text (today)
     .addClass('m-2')
     
+    $(searchCityEl).append(getCityEl, getdayEl);
     var{weather, temp, wind_speed, humidity, uvi} = weather.current;
     
     currentWeatherEl.innerHTML =
