@@ -95,11 +95,22 @@ var displayCity = function(name, weather){
         <div>Humidity: ${humidity}</div>
     </div>    
     <div class="current-weather-data" id="uvi">
-        <div>UV Index: ${uvi}</div>
+        <div>UV Index: <button class='btn uvBtn' id = 'uvBtn'>${uvi}</button></div>
     </div>  
     
     `;
+    uvClr();
+    
 }
+
+var uvClr = function() {
+    var uvButton = document.getElementById('uvBtn');
+    if (uvButton < 2.5 ){
+        $('#uvBtn').addClass('low');
+    } else {
+        $('#uvBtn').addClass('high');
+    }
+};
 
 var displayFuture = function (weather){
     let forcastDay1El = document.getElementById('date1');
@@ -178,6 +189,7 @@ var cityNameBtn = function (searchCityNameEl, i){
         document.getElementById('date5').innerHTML = "";
         $('#city-date-icon').html("");
         document.getElementById('current-weather-data').innerHTML = "";
+        
         var name = document.getElementById('buttons').innerHTML;
        
    
